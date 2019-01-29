@@ -1,0 +1,61 @@
+
+body{
+    text-align: center;
+    font-family:arial;
+    word-wrap: break-word;
+}
+.tabele{
+    text-align: center;
+    border-collapse: collapse;
+    border-bottom: 1px gray;
+    padding: 2em;
+}
+
+.menu{
+    display: inline-block;
+    border: solid 2px darkgray;
+    font-family:arial;
+    font-size:0.8em;
+    text-decoration: none;
+}
+
+.button{
+    border: solid 2px lightgray;
+    background: lightgray;
+    border-radius: 10%;
+    padding: 0.2em;
+    font-family:arial;
+    font-size:0.8em;
+    text-decoration: none;
+    color: black;
+
+}
+
+.button:hover{
+    background: white;
+}
+
+.line{
+    border: solid 1px darkgray;
+}
+
+.thinLine{
+    border: solid 0.5px lightgray;
+}
+
+.text{
+    font-family:arial;
+    font-size:0.8em;
+}
+
+.links{
+    font-family:arial;
+    font-size:0.8em;
+    text-decoration: none;
+}
+
+.error{
+    color: cornflowerblue;
+    font-family:arial;
+    font-size:0.8em;
+}
