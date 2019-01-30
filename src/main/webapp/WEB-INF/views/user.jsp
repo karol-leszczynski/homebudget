@@ -10,9 +10,24 @@
 </head>
 <body style="text-align: center">
 <jsp:include page="menu.jsp"/>
-<div>
-    <div>
+
+<div class="flex-container">
+    <div class="columnleft">
+        <div>
             <a href="/budget/new" class="button">Dodaj nowy budżet</a>
+        </div>
+        <p class="text"><strong>TWOJE BUDŻETY</strong></p>
+        <div>
+            <c:forEach items="${list}" var="budget">
+                <div>
+                    <p class="text"><strong>${budget.startDate.format(formatter)}</strong><br/></p>
+                    <hr class="thinLine">
+                </div>
+            </c:forEach>
+        </div>
+    </div>
+    <div class="columnright">
+        <p>asdasdasdasdasdasdasdasdasddddddddddddddddddddddddddddddddasdddddddddddddddd</p>
     </div>
 </div>
 </body>

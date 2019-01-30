@@ -20,8 +20,8 @@
     </sec:authorize>
     <sec:authorize access="isAuthenticated()">
         <a href="/user" class="button">Twoje Budżety</a>
-        <a href="/login/logout" class="button">Wyloguj się</a>
-        <p class="text">Witaj ${sessionScope.username}!</p>
+        <a href="/logout" class="button">Wyloguj się</a>
+        <p class="text">Witaj ${sessionScope.name}!</p>
     </sec:authorize>
 </div>
 <hr class="line">

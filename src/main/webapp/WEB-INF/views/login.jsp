@@ -22,7 +22,7 @@
             <p>Email: <form:input path="email" required="true" name="login"/></p>
             <p>Hasło: <form:password path="password" required="true" name="password"/>
                 <form:errors path="password" cssClass="error"/></p>
-            <p><input type="submit" value="Zaloguj"></p>
+            <p><input class="button" type="submit" value="Zaloguj"></p>
         </form:form>
     </div>
 </div>
@@ -30,7 +30,7 @@
 <br/>
 <div>
     <h3 class="text">lub, jeśli nie masz konta:</h3><br/>
-    <a href="/user" class="button">zarejetruj się</a>
+    <a href="/register" class="button">zarejetruj się</a>
 </div>
 </body>
 </html>

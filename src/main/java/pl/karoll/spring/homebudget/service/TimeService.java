@@ -1,10 +1,12 @@
 package pl.karoll.spring.homebudget.service;
 
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.Period;
 
+@Service
 public class TimeService {
 
     public int daysInMonth (LocalDate startDate){

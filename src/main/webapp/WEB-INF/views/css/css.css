@@ -59,3 +59,28 @@ body{
     font-family:arial;
     font-size:0.8em;
 }
+
+.flex-container {
+    display: inline-block;
+    font-size: 0.9em;
+    width: 100%;
+    margin-top: 1em;
+}
+
+.columnleft {
+    /*word-wrap: break-word;*/
+    width: 30%;
+    float: left;
+    margin: auto;
+    padding: 0.5%;
+    line-height: 1.5em;
+}
+
+.columnright {
+    word-wrap: break-word;
+    width: 67%;
+    float: right;
+    margin-left: auto;
+    padding: 0.5%;
+    border-left: 2px solid lightgray;
+}

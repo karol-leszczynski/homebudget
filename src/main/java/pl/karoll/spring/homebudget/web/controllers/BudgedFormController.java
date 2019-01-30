@@ -12,7 +12,6 @@ import pl.karoll.spring.homebudget.service.TimeService;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.util.ArrayList;
 
 @Controller
 @RequestMapping("/budget")
@@ -24,9 +23,10 @@ public class BudgedFormController {
 
 
     public BudgedFormController(UserRepository userRepository
-            , BudgetRepository budgetRepository) {
+            , BudgetRepository budgetRepository, TimeService timeService) {
         this.userRepository = userRepository;
         this.budgetRepository = budgetRepository;
+        this.timeService = timeService;
     }
 
     @GetMapping("/new")
