@@ -15,9 +15,12 @@
 <div>
     <h3 class="text">Zaloguj się</h3>
     <div class="text">
+        <c:if test="${param['error'] != null}">
+        <span class="error">Błędny login lub hasło!</span>
+        </c:if>
         <form:form modelAttribute="userDto" method="post">
-            <p>Email: <form:input path="email" required="true"/></p>
-            <p>Hasło: <form:password path="password" required="true"/>
+            <p>Email: <form:input path="email" required="true" name="login"/></p>
+            <p>Hasło: <form:password path="password" required="true" name="password"/>
                 <form:errors path="password" cssClass="error"/></p>
             <p><input type="submit" value="Zaloguj"></p>
         </form:form>

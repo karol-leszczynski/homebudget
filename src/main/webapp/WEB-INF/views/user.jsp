@@ -12,9 +12,7 @@
 <jsp:include page="menu.jsp"/>
 <div>
     <div>
-        <c:if test="${not empty sessionScope.user}">
-            <a href="/new" class="button">Dodaj nowy budżet</a>
-        </c:if>
+            <a href="/budget/new" class="button">Dodaj nowy budżet</a>
     </div>
 </div>
 </body>

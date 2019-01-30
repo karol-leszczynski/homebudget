@@ -35,27 +35,27 @@ public class LoginController {
         return "login";
     }
 
-    @PostMapping
-    public String loginUser(@ModelAttribute UserDto userDto,
-                            BindingResult result, HttpSession session) {
-        User userByEmail = userRepository.findByEmail(userDto.getEmail());
-        if (userByEmail == null) {
-            result.rejectValue("password", null, "Błędny email lub hasło");
-            return "login";
-        }
-        if (!passwordEncoder.matches(userDto.getPassword(),
-                userByEmail.getPassword())) {
-            result.rejectValue("password", null, "Błędny email lub hasło");
-            return "login";
-        }
-        session.setAttribute("user", userByEmail.getId());
-        session.setAttribute("username", userByEmail.getUserName());
-        return "redirect:/user";
-    }
+//    @PostMapping
+//    public String loginUser(@ModelAttribute UserDto userDto,
+//                            BindingResult result, HttpSession session) {
+//        User userByEmail = userRepository.findByEmail(userDto.getEmail());
+//        if (userByEmail == null) {
+//            result.rejectValue("password", null, "Błędny email lub hasło");
+//            return "login";
+//        }
+//        if (!passwordEncoder.matches(userDto.getPassword(),
+//                userByEmail.getPassword())) {
+//            result.rejectValue("password", null, "Błędny email lub hasło");
+//            return "login";
+//        }
+//        session.setAttribute("userid", userByEmail.getId());
+//        session.setAttribute("username", userByEmail.getUserName());
+//        return "redirect:/user";
+//    }
 
-    @GetMapping("/logout")
-    public String logout(HttpSession session) {
-        session.invalidate();
-        return "redirect:/";
-    }
+//    @GetMapping("/logout/old")
+//    public String logout(HttpSession session) {
+//        session.invalidate();
+//        return "redirect:/";
+//    }
 }

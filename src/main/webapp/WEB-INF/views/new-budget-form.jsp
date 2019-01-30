@@ -10,9 +10,15 @@
 </head>
 <body style="text-align: center">
 <jsp:include page="menu.jsp"/>
-<form action="/test" method="post">
-    <input type="date" name="data"/>
-    <input type="submit" value="Utwórz"/>
-</form>
+<div>
+    <div class="text">
+        <form:form modelAttribute="newBudget" method="post">
+            <p><strong>Podaj datę rozpoczęcia budżetu</strong><br/>
+                (optymalnym dniem jest ten, w którym na twoje konto wpływa wypłata)<br/>
+                <form:input type="date" path="stringDate" required="true"/>
+            <p><input type="submit" value="Utwórz"></p>
+        </form:form>
+    </div>
+</div>
 </body>
 </html>

@@ -20,10 +20,6 @@ public class Budget {
 
     private int daysInMonth;
 
-    private int fullWeeks;
-
-    private int daysOutOfFullWeeks;
-
     @ManyToMany
     private List<User> users = new ArrayList<>();
 
@@ -57,22 +53,6 @@ public class Budget {
 
     public void setDaysInMonth(int daysInMonth) {
         this.daysInMonth = daysInMonth;
-    }
-
-    public int getFullWeeks() {
-        return fullWeeks;
-    }
-
-    public void setFullWeeks(int fullWeeks) {
-        this.fullWeeks = fullWeeks;
-    }
-
-    public int getDaysOutOfFullWeeks() {
-        return daysOutOfFullWeeks;
-    }
-
-    public void setDaysOutOfFullWeeks(int daysOutOfFullWeeks) {
-        this.daysOutOfFullWeeks = daysOutOfFullWeeks;
     }
 
     public List<User> getUsers() {
