@@ -69,7 +69,7 @@ body{
 
 .columnleft {
     /*word-wrap: break-word;*/
-    width: 30%;
+    width: 25%;
     float: left;
     margin: auto;
     padding: 0.5%;
@@ -78,9 +78,13 @@ body{
 
 .columnright {
     word-wrap: break-word;
-    width: 67%;
+    width: 72%;
     float: right;
     margin-left: auto;
     padding: 0.5%;
     border-left: 2px solid lightgray;
+}
+
+.list {
+    margin: 1px;
 }

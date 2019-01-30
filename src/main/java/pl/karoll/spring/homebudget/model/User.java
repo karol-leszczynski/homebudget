@@ -13,20 +13,14 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-//    @NotNull
-//    @NotBlank(message = "To pole nie może być puste")
     @Column(nullable = false, unique = true)
     private String userName;
 
-//    @Size(min = 5, message = "Hasło musi mieć minimum 3 znaki")
-//    @Pattern(regexp = "(([A-Z][a-z])+|([a-z][A-Z]+))")
     @Column(nullable = false)
     private String password;
 
     private Boolean enabled = false;
 
-//    @NotNull
-//    @Email(message = "podaj prawidłowy adres e-mail")
     @Column(nullable = false, unique = true)
     private String email;
 

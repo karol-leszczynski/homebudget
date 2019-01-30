@@ -16,6 +16,7 @@
             <p><strong>Podaj datę rozpoczęcia budżetu</strong><br/>
                 (optymalnym dniem jest ten, w którym na twoje konto wpływa wypłata)<br/>
                 <form:input type="date" path="stringDate" required="true"/>
+            <form:errors cssClass="error" path="stringDate"/>
             <p><input type="submit" value="Utwórz"></p>
         </form:form>
     </div>

@@ -5,9 +5,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import pl.karoll.spring.homebudget.dto.NewBudgetDto;
-import pl.karoll.spring.homebudget.model.Budget;
-import pl.karoll.spring.homebudget.repositories.BudgetRepository;
-import pl.karoll.spring.homebudget.repositories.UserRepository;
+import pl.karoll.spring.homebudget.service.BudgetService;
 import pl.karoll.spring.homebudget.service.TimeService;
 
 import javax.servlet.http.HttpSession;
@@ -17,17 +15,15 @@ import javax.validation.Valid;
 @RequestMapping("/budget")
 public class BudgedFormController {
 
-    private UserRepository userRepository;
-    private BudgetRepository budgetRepository;
     private TimeService timeService;
+    private BudgetService budgetService;
 
-
-    public BudgedFormController(UserRepository userRepository
-            , BudgetRepository budgetRepository, TimeService timeService) {
-        this.userRepository = userRepository;
-        this.budgetRepository = budgetRepository;
+    public BudgedFormController(TimeService timeService
+            , BudgetService budgetService) {
         this.timeService = timeService;
+        this.budgetService = budgetService;
     }
+
 
     @GetMapping("/new")
     public String prepareBudgetForm(Model model) {
@@ -41,15 +37,15 @@ public class BudgedFormController {
             @Valid NewBudgetDto budgetDto
             , BindingResult result
             , HttpSession session) {
-        if (result.hasErrors()) {
-            return "/new";
+        if (timeService.odlerThanThisMonth(budgetDto.localDate())){
+            result.rejectValue("stringDate", null
+                    , "Nie można utworzyć nowego budżetu dla poprzenich miesięcy");
+            return "/new-budget-form";
         }
-        Budget budget = new Budget();
-        budget.setStartDate(budgetDto.localDate());
-        budget.setDaysInMonth(timeService.daysInMonth(budgetDto.localDate()));
-        Long id = (Long) session.getAttribute("userid");
-        budget.getUsers().add(userRepository.getOne(id));
-        budgetRepository.save(budget);
+        if (result.hasErrors()) {
+            return "/new-budget-form";
+        }
+        budgetService.saveNewBudged(budgetDto);
 
         return "redirect:/user";
     }

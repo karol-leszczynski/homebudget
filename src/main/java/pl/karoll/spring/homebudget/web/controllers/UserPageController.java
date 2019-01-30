@@ -5,9 +5,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import pl.karoll.spring.homebudget.model.User;
 import pl.karoll.spring.homebudget.repositories.BudgetRepository;
-import pl.karoll.spring.homebudget.repositories.UserRepository;
+import pl.karoll.spring.homebudget.service.BudgetService;
+import pl.karoll.spring.homebudget.service.UserService;
 
 import javax.servlet.http.HttpSession;
 import java.security.Principal;
@@ -17,38 +17,26 @@ import java.time.format.DateTimeFormatter;
 @RequestMapping("/user")
 public class UserPageController {
 
-    private UserRepository userRepository;
-    private BudgetRepository budgetRepository;
+    private UserService userService;
+    private BudgetService budgetService;
 
-    public UserPageController(UserRepository userRepository, BudgetRepository budgetRepository) {
-        this.userRepository = userRepository;
-        this.budgetRepository = budgetRepository;
+    public UserPageController(UserService userService
+            , BudgetService budgetService) {
+        this.userService = userService;
+        this.budgetService = budgetService;
     }
-
 
     @GetMapping
     public String userPage(Principal principal
             , Model model
             , HttpSession session){
         String currentUsermail = principal.getName();
-        User currentUser = userRepository.findByEmail(currentUsermail);
-        String currentUserName = currentUser.getUserName();
-        Long currentUserId = currentUser.getId();
-        session.setAttribute("name", currentUserName);
-        session.setAttribute("userid", currentUserId);
+        Long currentUserId = userService.currentUserIdByEmail(currentUsermail);
+        userService.setCurrentUserDataToSession(currentUsermail);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-yyyy");
-        model.addAttribute("list", budgetRepository
-                .findAllByUsersIdOrderByStartDateDesc(currentUserId));
         model.addAttribute("formatter", formatter);
+        model.addAttribute("list", budgetService
+                .currentUserBudgets(currentUserId));
         return "user";
     }
-
-    @GetMapping("/test")
-    @ResponseBody
-    public String userTest (){
-        return String.valueOf(budgetRepository.findAllByUsersIdOrderByStartDateDesc(4L));
-    }
-
-
-
 }

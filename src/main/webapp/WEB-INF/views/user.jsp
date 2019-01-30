@@ -19,8 +19,8 @@
         <p class="text"><strong>TWOJE BUDŻETY</strong></p>
         <div>
             <c:forEach items="${list}" var="budget">
-                <div>
-                    <p class="text"><strong>${budget.startDate.format(formatter)}</strong><br/></p>
+                <div class="text">
+                    <p class="list"><strong>${budget.startDate.format(formatter)}</strong><br/></p>
                     <hr class="thinLine">
                 </div>
             </c:forEach>

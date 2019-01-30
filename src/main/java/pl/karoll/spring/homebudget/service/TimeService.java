@@ -18,12 +18,13 @@ public class TimeService {
         return startDate.plusMonths(1).minusDays(1);
     }
 
+    public boolean odlerThanThisMonth (LocalDate localDate){
+        LocalDate currentMonthBegin = LocalDate.now().withDayOfMonth(1);
+        return localDate.isBefore(currentMonthBegin);
+    }
+
 //    public static void main(String[] args) {
-//        LocalDate now = LocalDate.parse("2019-02-01");
-//        System.out.println(now);
-//        System.out.println(endOfMonthPeriodDate(now));
-//        System.out.println(daysInMonth(now));
-//        daysInMonth(now);
+//        LocalDate now = LocalDate.parse("2018-02-01");
 //    }
 
 }
