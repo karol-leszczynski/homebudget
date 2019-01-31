@@ -37,6 +37,10 @@ public class BudgetService {
         return budgetRepository.findAllByUsersIdOrderByStartDateDesc(currentUserId);
     }
 
+    public void deleteBudget (Long budgetId){
+        budgetRepository.deleteById(budgetId);
+    }
+
     public void saveNewBudged(NewBudgetDto newBudgetDto) {
         Budget budget = new Budget();
         budget.setStartDate(newBudgetDto.localDate());

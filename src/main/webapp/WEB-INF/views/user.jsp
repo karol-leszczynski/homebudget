@@ -22,21 +22,42 @@
         <div>
             <c:forEach items="${list}" var="budget">
                 <div class="text">
+                    <a href="/budget/delete?budgetId=${budget.id}" class="button">Usuń</a>
                     <a href="/budget/set?id=${budget.id}" class="list">
-                        <strong>${budget.startDate.format(formatterShort)}</strong><br/></a>
+                        <strong>${budget.startDate.format(formatterShort)}</strong></a>
                     <hr class="thinLine">
                 </div>
             </c:forEach>
         </div>
     </div>
     <div class="columnright">
+        <c:if test="${not empty invitations}">
+            <c:forEach items="${invitations}" var="invitation">
+                <p class="text">${invitation.message}
+                    <a class="button"
+                       href="/invitation/accept?userId=${invitation.reciver.id}
+                       &budgetId=${invitation.budgetId}
+                       &invitationId=${invitation.id}">Zaakceptuj</a>
+                    <a class="button" href="/invitation/delete?invitationId=${invitation.id}">Odrzuć</a>
+                <hr class="thinLine"></p>
+            </c:forEach>
+        </c:if>
         <c:if test="${empty sessionScope.currentbudgetid}">
             <p class="text">Utwórz nowy budżet lub wybierz z listy istniejących</p>
         </c:if>
         <c:if test="${not empty sessionScope.currentbudgetid}">
             <p class="text"><strong>BUDŻET</strong> OD <strong>
-                    ${sessionScope.currentbudgetstartdate.format(formatterLong)}</strong> DO
-                <strong>${sessionScope.currentbudgetenddate.format(formatterLong)}</strong>
+                ${sessionScope.currentbudgetstartdate.format(formatterLong)}</strong> DO
+            <strong>${sessionScope.currentbudgetenddate.format(formatterLong)}</strong>
+            <form class="text" action="/invitation/send" method="post">
+            <c:if test="${not empty inviteMessage}">
+                <p style="color: cornflowerblue"><br/>${inviteMessage}</p>
+            </c:if>
+            <label>Zaproś inne osoby</label>
+            (podaj email) <input name="reciverEmail"/>
+            <input class="button" type="submit" value="Zaproś">
+            </form>
+            <hr class="thinLine">
             </p>
         </c:if>
     </div>
