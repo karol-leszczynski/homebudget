@@ -25,38 +25,40 @@ public class UserService {
         this.httpSession = httpSession;
     }
 
-    public boolean ifExistByEmail (String email){
-        if (userRepository.findByEmail(email)!=null){
+    public boolean ifExistByEmail(String email) {
+        if (userRepository.findByEmail(email) != null) {
             return true;
         }
         return false;
     }
 
-    public boolean ifExistByName (String name){
-        if (userRepository.findByUserName(name)!=null){
+    public boolean ifExistByName(String name) {
+        if (userRepository.findByUserName(name) != null) {
             return true;
         }
         return false;
     }
 
-    public User currentUserByEmail (String email){
+    public User currentUserByEmail(String email) {
         return userRepository.findByEmail(email);
     }
 
-    public Long currentUserIdByEmail(String email){
+    public Long currentUserIdByEmail(String email) {
         return currentUserByEmail(email).getId();
     }
 
-    public String currentUserNameByEmail(String email){
+    public String currentUserNameByEmail(String email) {
         return currentUserByEmail(email).getUserName();
     }
 
-    public void setCurrentUserDataToSession (String currentUserEmail){
-        httpSession.setAttribute("userid", currentUserIdByEmail(currentUserEmail));
-        httpSession.setAttribute("name", currentUserNameByEmail(currentUserEmail));
+    public void setCurrentUserDataToSession(String currentUserEmail) {
+        if (httpSession.getAttribute("userid") == null) {
+            httpSession.setAttribute("userid", currentUserIdByEmail(currentUserEmail));
+            httpSession.setAttribute("name", currentUserNameByEmail(currentUserEmail));
+        }
     }
 
-    public void saveNewUser(UserDto userDto){
+    public void saveNewUser(UserDto userDto) {
         User user = new User();
         user.setEnabled(true);
         user.setEmail(userDto.getEmail());
@@ -65,7 +67,6 @@ public class UserService {
         user.setPassword(encodedPassword);
         userRepository.save(user);
     }
-
 
 
 }

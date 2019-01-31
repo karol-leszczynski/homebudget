@@ -54,9 +54,18 @@ public class BudgetService {
                 if (currentDate.getMonth().equals(budget.getStartDate().getMonth())) {
                     httpSession.setAttribute("currentbudgetid",
                             budget.getId());
+                    setCurrentBuddgetDatesToSession(budget.getId());
                 }
             }
         }
+    }
+
+    public void setCurrentBuddgetDatesToSession(Long id){
+        LocalDate startDate = budgetRepository.getOne(id).getStartDate();
+        LocalDate endDate = timeService.endOfMonthPeriodDate(startDate);
+        httpSession.setAttribute("currentbudgetstartdate",startDate);
+        httpSession.setAttribute("currentbudgetenddate",endDate);
+        httpSession.setAttribute("currentbudgetid", id);
     }
 
 }

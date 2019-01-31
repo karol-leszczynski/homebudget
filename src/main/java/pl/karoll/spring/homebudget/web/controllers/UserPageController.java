@@ -33,8 +33,11 @@ public class UserPageController {
         String currentUsermail = principal.getName();
         Long currentUserId = userService.currentUserIdByEmail(currentUsermail);
         userService.setCurrentUserDataToSession(currentUsermail);
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-yyyy");
-        model.addAttribute("formatter", formatter);
+        budgetService.setActualBudgdettoSession();
+        DateTimeFormatter formatterLong = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        DateTimeFormatter formatterShort = DateTimeFormatter.ofPattern("MM-yyyy");
+        model.addAttribute("formatterShort", formatterShort);
+        model.addAttribute("formatterLong", formatterLong);
         model.addAttribute("list", budgetService
                 .currentUserBudgets(currentUserId));
         return "user";

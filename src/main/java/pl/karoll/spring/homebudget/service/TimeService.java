@@ -23,6 +23,7 @@ public class TimeService {
         return localDate.isBefore(currentMonthBegin);
     }
 
+
 //    public static void main(String[] args) {
 //        LocalDate now = LocalDate.parse("2018-02-01");
 //    }

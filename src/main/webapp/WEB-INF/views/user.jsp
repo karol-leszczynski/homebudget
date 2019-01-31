@@ -5,7 +5,9 @@
 <html>
 <head>
     <title>Strona użytkownika</title>
-    <style><%@include file="css/css.css"%></style>
+    <style>
+        <%@include file="css/css.css" %>
+    </style>
     <link rel="stylesheet" href="css/css.css">
 </head>
 <body style="text-align: center">
@@ -20,14 +22,23 @@
         <div>
             <c:forEach items="${list}" var="budget">
                 <div class="text">
-                    <p class="list"><strong>${budget.startDate.format(formatter)}</strong><br/></p>
+                    <a href="/budget/set?id=${budget.id}" class="list">
+                        <strong>${budget.startDate.format(formatterShort)}</strong><br/></a>
                     <hr class="thinLine">
                 </div>
             </c:forEach>
         </div>
     </div>
     <div class="columnright">
-        <p>asdasdasdasdasdasdasdasdasddddddddddddddddddddddddddddddddasdddddddddddddddd</p>
+        <c:if test="${empty sessionScope.currentbudgetid}">
+            <p class="text">Utwórz nowy budżet lub wybierz z listy istniejących</p>
+        </c:if>
+        <c:if test="${not empty sessionScope.currentbudgetid}">
+            <p class="text"><strong>BUDŻET</strong> OD <strong>
+                    ${sessionScope.currentbudgetstartdate.format(formatterLong)}</strong> DO
+                <strong>${sessionScope.currentbudgetenddate.format(formatterLong)}</strong>
+            </p>
+        </c:if>
     </div>
 </div>
 </body>
