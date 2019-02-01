@@ -3,6 +3,7 @@ package pl.karoll.spring.homebudget.service;
 import org.springframework.stereotype.Service;
 import pl.karoll.spring.homebudget.dto.NewBudgetDto;
 import pl.karoll.spring.homebudget.model.Budget;
+import pl.karoll.spring.homebudget.model.Incomes;
 import pl.karoll.spring.homebudget.repositories.BudgetRepository;
 import pl.karoll.spring.homebudget.repositories.UserRepository;
 
@@ -19,14 +20,17 @@ public class BudgetService {
     private BudgetRepository budgetRepository;
     private TimeService timeService;
     private HttpSession httpSession;
+    private IncomeService incomeService;
 
     public BudgetService(UserRepository userRepository
             , BudgetRepository budgetRepository
-            , TimeService timeService, HttpSession httpSession) {
+            , TimeService timeService, HttpSession httpSession
+            , IncomeService incomeService) {
         this.userRepository = userRepository;
         this.budgetRepository = budgetRepository;
         this.timeService = timeService;
         this.httpSession = httpSession;
+        this.incomeService = incomeService;
     }
 
     public Long currentUserIdFromSeesion() {
@@ -38,7 +42,13 @@ public class BudgetService {
     }
 
     public void deleteBudget (Long budgetId){
+//        manual delete incomes
+        List<Incomes> incomes = incomeService.getIncomesForBudgetById(budgetId);
+        for (Incomes income:incomes) {
+            incomeService.deleteIncomeById(income.getId());
+        }
         budgetRepository.deleteById(budgetId);
+        httpSession.removeAttribute("currentbudgetid");
     }
 
     public void saveNewBudged(NewBudgetDto newBudgetDto) {

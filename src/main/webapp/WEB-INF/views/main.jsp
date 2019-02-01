@@ -11,7 +11,7 @@
 <body style="text-align: center">
 <jsp:include page="menu.jsp"/>
 
-<div>
+<div class="background">
     <h3>SAMOUCZEK TWORZENIA BUDŻETU</h3>
 </div>
 </body>

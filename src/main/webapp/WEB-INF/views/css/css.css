@@ -1,69 +1,108 @@
 
-body{
+body {
     text-align: center;
-    font-family:arial;
+    font-family: arial;
+    font-size: 13pt;
     word-wrap: break-word;
 }
-.tabele{
+
+.background {
+    background-image: url("back.jpg");
+}
+
+.tabele {
     text-align: center;
     border-collapse: collapse;
     border-bottom: 1px gray;
     padding: 2em;
 }
 
-.menu{
+.menu {
     display: inline-block;
     border: solid 2px darkgray;
-    font-family:arial;
-    font-size:0.8em;
+    font-family: arial;
+    font-size: 0.8em;
     text-decoration: none;
 }
 
-.button{
+.button {
     border: solid 2px lightgray;
     background: lightgray;
     border-radius: 10%;
     padding: 0.2em;
-    font-family:arial;
-    font-size:0.8em;
+    font-family: arial;
+    font-size: 0.8em;
     text-decoration: none;
     color: black;
 
 }
 
-.button:hover{
+.button:hover {
     background: white;
 }
 
-.line{
+.button-red {
+    border: solid 2px darkred;
+    background: lightgray;
+    border-radius: 10%;
+    height: 1em;
+    width: 1em;
+    font-family: arial;
+    font-size: 1em;
+    font-weight: bold;
+    text-decoration: none;
+    color: darkred;
+}
+
+.button-red:hover {
+    background: white;
+}
+
+.button-blue {
+    border: solid 2px steelblue;
+    background: lightgray;
+    border-radius: 10%;
+    padding: 0.2em;
+    font-family: arial;
+    font-size: 0.8em;
+    font-weight: bold;
+    text-decoration: none;
+    color: steelblue;
+}
+
+.button-blue:hover {
+    background: white;
+}
+
+.line {
     border: solid 1px darkgray;
 }
 
-.thinLine{
+.thinLine {
     border: solid 0.5px lightgray;
 }
 
-.text{
-    font-family:arial;
-    font-size:0.8em;
+.text {
+    font-family: arial;
+    font-size: 1em;
 }
 
-.links{
-    font-family:arial;
-    font-size:0.8em;
+.links {
+    font-family: arial;
+    font-size: 0.8em;
     text-decoration: none;
 }
 
-.error{
+.error {
     color: cornflowerblue;
-    font-family:arial;
-    font-size:0.8em;
+    font-family: arial;
+    font-size: 0.8em;
 }
 
 .flex-container {
     display: inline-block;
     font-size: 0.9em;
-    width: 100%;
+    width: 700px;
     margin-top: 1em;
 }
 
@@ -77,15 +116,76 @@ body{
 }
 
 .columnright {
+    text-align: center;
     word-wrap: break-word;
     width: 72%;
     float: right;
     margin-left: auto;
     padding: 0.5%;
     border-left: 2px solid lightgray;
+
 }
 
 .list {
     margin: 1px;
     text-decoration: none;
+    font-family: arial;
+    font-size: 0.8em;
+    line-height: 150%;
+}
+
+/*fake tabela*/
+.tg {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+.tg td {
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+    padding: 10px 5px;
+    border-style: solid;
+    border-width: 1px;
+    overflow: hidden;
+    word-break: normal;
+    border-color: black;
+}
+
+.tg th {
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+    font-weight: normal;
+    padding: 10px 5px;
+    border-style: solid;
+    border-width: 1px;
+    overflow: hidden;
+    word-break: normal;
+    border-color: black;
+}
+
+.tg .tg-vt7q {
+    border-color: white;
+    text-align: right;
+    vertical-align: top
+}
+
+.tg .tg-wo29 {
+    border-color: white;
+    text-align: left;
+    vertical-align: top
+}
+
+.tg .tg-wtex {
+    font-weight: bold;
+    border-color: white;
+    text-align: right;
+    vertical-align: top
+}
+
+.tg .tg-coyn {
+    font-weight: bold;
+    color: #cb0000;
+    border-color: white;
+    text-align: left;
+    vertical-align: top
 }

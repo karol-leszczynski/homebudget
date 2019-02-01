@@ -12,13 +12,11 @@ public class Incomes {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull
     @Column(nullable = false)
     private Double incomeAmmount = 0.0;
 
     //    b - budget
     //    p - personal
-    @NotNull
     @Column(nullable = false)
     private String type;
 

@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import pl.karoll.spring.homebudget.dto.InvitationDto;
 import pl.karoll.spring.homebudget.repositories.InvitationRepository;
 import pl.karoll.spring.homebudget.service.BudgetService;
+import pl.karoll.spring.homebudget.service.IncomeService;
 import pl.karoll.spring.homebudget.service.InvitationService;
 import pl.karoll.spring.homebudget.service.UserService;
 
@@ -21,12 +22,14 @@ public class UserPageController {
     private UserService userService;
     private BudgetService budgetService;
     private InvitationService invitationService;
+    private IncomeService incomeService;
 
 
-    public UserPageController(UserService userService, BudgetService budgetService, InvitationService invitationService, InvitationRepository invitationRepository, InvitationService invitationService1) {
+    public UserPageController(UserService userService, BudgetService budgetService, InvitationService invitationService, InvitationRepository invitationRepository, InvitationService invitationService1, IncomeService incomeService) {
         this.userService = userService;
         this.budgetService = budgetService;
         this.invitationService = invitationService1;
+        this.incomeService = incomeService;
     }
 
     @GetMapping
@@ -45,6 +48,7 @@ public class UserPageController {
                 .currentUserBudgets(currentUserId));
         model.addAttribute("invitationDto", new InvitationDto());
         model.addAttribute("invitations", invitationService.invitationsList());
+        model.addAttribute("incomes", incomeService.getIncomesForCurrentBudget());
         return "user";
     }
 }
