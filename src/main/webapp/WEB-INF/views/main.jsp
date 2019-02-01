@@ -11,8 +11,17 @@
 <body style="text-align: center">
 <jsp:include page="menu.jsp"/>
 
-<div class="background">
-    <h3>SAMOUCZEK TWORZENIA BUDŻETU</h3>
+<div class="home-page-background">
+    <p class="container-right">
+        <strong>Witaj w budget app!</strong>
+    </p>
+    <p class="container-right">
+        Dowiedz się, jak tworzyć budżety w naszej aplikacji
+    </p>
+    <p class="container-right">
+        Dowiedz się wiecej o planowniu własnych finansów
+    </p>
 </div>
+
 </body>
 </html>

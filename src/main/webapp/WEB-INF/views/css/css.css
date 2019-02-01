@@ -4,10 +4,31 @@ body {
     font-family: arial;
     font-size: 13pt;
     word-wrap: break-word;
+
 }
 
-.background {
-    background-image: url("back.jpg");
+.home-page-background {
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 90%,
+    rgba(255, 255, 255, 1)), url(pics/back.jpg);
+    height: 403px;
+    padding: 0.5em;
+    background-repeat: no-repeat;
+    background-position: center;
+    margin: auto;
+    position: relative;
+    width: 825px;
+}
+
+.container-right {
+    font-size: 13pt;
+    color: #203535;
+    width: 250px;
+    border-radius: 8px;
+    margin-left: auto;
+    margin-right: 0.5em;
+    margin-top: 0.5em;
+    padding: 0.2em;
+    background: rgba(255, 255, 255, 0.65);
 }
 
 .tabele {
