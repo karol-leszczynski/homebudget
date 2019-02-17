@@ -8,17 +8,17 @@
     <style><%@include file="css/css.css"%></style>
     <link rel="stylesheet" href="css/css.css">
 </head>
-<body style="text-align: center">
+<body>
 <jsp:include page="menu.jsp"/>
 
 <div class="home-page-background">
-    <p class="container-right">
+    <p class="boxes-right">
         <strong>Witaj w budget app!</strong>
     </p>
-    <p class="container-right">
+    <p class="boxes-right">
         Dowiedz się, jak tworzyć budżety w naszej aplikacji
     </p>
-    <p class="container-right">
+    <p class="boxes-right">
         Dowiedz się wiecej o planowniu własnych finansów
     </p>
 </div>

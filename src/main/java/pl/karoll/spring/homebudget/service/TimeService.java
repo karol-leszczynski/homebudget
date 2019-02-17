@@ -4,6 +4,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.Period;
 
 @Service
@@ -21,6 +22,14 @@ public class TimeService {
     public boolean odlerThanThisMonth (LocalDate localDate){
         LocalDate currentMonthBegin = LocalDate.now().withDayOfMonth(1);
         return localDate.isBefore(currentMonthBegin);
+    }
+
+    public LocalDate currentDate (){
+        return LocalDate.now();
+    }
+
+    public LocalDateTime currentDateTime (){
+        return LocalDateTime.now();
     }
 
 

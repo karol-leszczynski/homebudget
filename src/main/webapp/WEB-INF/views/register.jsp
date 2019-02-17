@@ -22,7 +22,7 @@
                 <form:errors path="password" cssClass="error"/></p>
             <p>Powtórz hasło: <form:password path="passwordSecondCheck" required="true"/>
                 <form:errors path="passwordSecondCheck" cssClass="error"/></p>
-            <p><input class="button" type="submit" value="Zarejestruj"></p>
+            <p><input class="button-menu" type="submit" value="Zarejestruj"></p>
         </form:form>
     </div>
 </div>

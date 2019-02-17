@@ -13,14 +13,14 @@
 </head>
 <body>
 <div>
-    <a href="/" class="button">Home</a>
+    <a href="/" class="button-menu">Home</a>
     <sec:authorize access="!isAuthenticated()">
-        <a href="/login" class="button">Zaloguj</a>
-        <a href="/register" class="button">Zarejestruj</a>
+        <a href="/login" class="button-menu">Zaloguj</a>
+        <a href="/register" class="button-menu">Zarejestruj</a>
     </sec:authorize>
     <sec:authorize access="isAuthenticated()">
-        <a href="/user" class="button">Twoje Budżety</a>
-        <a href="/logout" class="button">Wyloguj się</a>
+        <a href="/user" class="button-menu">Twoje Budżety</a>
+        <a href="/logout" class="button-menu">Wyloguj się</a>
         <p class="text">Witaj ${sessionScope.name}!</p>
     </sec:authorize>
 </div>

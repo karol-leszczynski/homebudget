@@ -6,10 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import pl.karoll.spring.homebudget.dto.InvitationDto;
 import pl.karoll.spring.homebudget.repositories.InvitationRepository;
-import pl.karoll.spring.homebudget.service.BudgetService;
-import pl.karoll.spring.homebudget.service.IncomeService;
-import pl.karoll.spring.homebudget.service.InvitationService;
-import pl.karoll.spring.homebudget.service.UserService;
+import pl.karoll.spring.homebudget.service.*;
 
 import javax.servlet.http.HttpSession;
 import java.security.Principal;
@@ -23,13 +20,15 @@ public class UserPageController {
     private BudgetService budgetService;
     private InvitationService invitationService;
     private IncomeService incomeService;
+    private TimeService timeService;
 
 
-    public UserPageController(UserService userService, BudgetService budgetService, InvitationService invitationService, InvitationRepository invitationRepository, InvitationService invitationService1, IncomeService incomeService) {
+    public UserPageController(UserService userService, BudgetService budgetService, InvitationService invitationService, InvitationRepository invitationRepository, InvitationService invitationService1, IncomeService incomeService, TimeService timeService) {
         this.userService = userService;
         this.budgetService = budgetService;
         this.invitationService = invitationService1;
         this.incomeService = incomeService;
+        this.timeService = timeService;
     }
 
     @GetMapping
@@ -49,6 +48,8 @@ public class UserPageController {
         model.addAttribute("invitationDto", new InvitationDto());
         model.addAttribute("invitations", invitationService.invitationsList());
         model.addAttribute("incomes", incomeService.getIncomesForCurrentBudget());
+        model.addAttribute("currentDate", timeService.currentDate());
+        model.addAttribute("currentTime", timeService.currentDateTime());
         return "user";
     }
 }
