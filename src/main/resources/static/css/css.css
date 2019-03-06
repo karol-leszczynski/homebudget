@@ -22,7 +22,7 @@ h4 {
 
 .home-page-background {
     background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 80%,
-    rgba(255, 255, 255, 1)), url(pics/back.jpg);
+    rgba(255, 255, 255, 1)), url(/pics/back.jpg);
     height: 403px;
     padding: 0.5em;
     background-repeat: no-repeat;

@@ -5,8 +5,9 @@
 <html>
 <head>
     <title>Rejestracja</title>
-    <style><%@include file="css/css.css"%></style>
-    <link rel="stylesheet" href="css/css.css">
+    <%--<style><%@include file="css/css.css"%></style>--%>
+    <%--<link rel="stylesheet" href="css/css.css">--%>
+    <link rel="stylesheet" href="/css/css.css">
 </head>
 <body>
 <jsp:include page="menu.jsp"/>

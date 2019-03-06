@@ -5,10 +5,11 @@
 <html>
 <head>
     <title>Strona użytkownika</title>
-    <style>
-        <%@include file="css/css.css" %>
-    </style>
-    <link rel="stylesheet" href="css/css.css">
+    <%--<style>--%>
+        <%--<%@include file="css/css.css" %>--%>
+    <%--</style>--%>
+    <%--<link rel="stylesheet" href="css/css.css">--%>
+    <link rel="stylesheet" href="/css/css.css">
 </head>
 <body>
 <jsp:include page="menu.jsp"/>
@@ -222,15 +223,10 @@
             <div class="columnright">
                 <p class="list"><strong>WYDATKI</strong></p>
                 <hr class="thinLine">
-                <form action="" method="post">
-                    <fieldset class="expences-form">
-                        <legend class="text-gray-small">PLANOWANE:</legend>
-                        Opis <input style="width: 33%" name="ExpenceDescription" type="text" maxlength="50" required>
-                        Kwota <input style="width: 12%" name="ExpenceAmmount" type="number" required="" value="" min="0">
-                        Data <input style="width: 8rem" name="ExpenceDate" type="date" max="" min="">
-                        <input class="button-add" type="submit" value="+">
-                    </fieldset>
-                </form>
+
+                <jsp:include page="/expence/new"/>
+                <strong class="error">${expenceMessage}</strong>
+
                 <form action="" method="post">
                     <fieldset class="expences-form">
                         <legend class="text-gray-small">NIEPRZEWIDZIANE:</legend>

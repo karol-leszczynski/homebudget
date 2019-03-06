@@ -100,6 +100,10 @@ public class BudgetService {
             currentBudgetDto.setUsers(currentBudget.getUsers());
 //        currentBudgetDto.setExpences();
             currentBudgetDto.setIncomes(incomeService.getIncomesForBudgetById(id));
+            httpSession.setAttribute("currentBudgetStartDate"
+            , currentBudgetDto.getStartDate());
+            httpSession.setAttribute("currentBudgetEndDate"
+            , currentBudgetDto.getEndDate());
             return currentBudgetDto;
         }
         return null;

@@ -6,10 +6,11 @@
 <html>
 <head>
     <title>Menu</title>
-    <style>
-        <%@include file="css/css.css" %>
-    </style>
-    <link rel="stylesheet" href="css/css.css">
+    <%--<style>--%>
+        <%--<%@include file="css/css.css" %>--%>
+    <%--</style>--%>
+    <%--<link rel="stylesheet" href="css/css.css">--%>
+    <link rel="stylesheet" href="/css/css.css">
 </head>
 <body>
 <div>

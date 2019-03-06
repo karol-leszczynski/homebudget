@@ -3,6 +3,8 @@
 
 heroku_db.txt
 
+homebudget/src/main/resources/application.properties
+
 ### STS ###
 .apt_generated
 .classpath

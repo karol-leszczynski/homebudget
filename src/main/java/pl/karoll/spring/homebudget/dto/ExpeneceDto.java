@@ -1,39 +1,36 @@
-package pl.karoll.spring.homebudget.model;
+package pl.karoll.spring.homebudget.dto;
 
-import javax.persistence.*;
+import org.springframework.stereotype.Component;
+import pl.karoll.spring.homebudget.model.Budget;
+
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.Objects;
 
-@Entity
-public class Expences {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+@Component
+public class ExpeneceDto {
+
     private Long id;
 
-    @Column(nullable = false, length=50)
+    @NotNull
+    @NotBlank
     private String expenceDescription;
 
-    //    @NotNull
-    @Column(nullable = false)
-    private Double expenceAmmount = 0.0;
+    @NotNull
+    private Double expenceAmmount;
 
-    @Column(nullable = false)
     private boolean payed = false;
 
     //    a - always
     //    o - onetime
     //    n - not predicted
 
-    //    @NotNull
     private String type;
 
-    private LocalDate payDate;
-
-    @ManyToOne
     private Budget budget;
+
+    private String payDate;
 
     public Long getId() {
         return id;
@@ -75,14 +72,6 @@ public class Expences {
         this.budget = budget;
     }
 
-    public LocalDate getPayDate() {
-        return payDate;
-    }
-
-    public void setPayDate(LocalDate payDate) {
-        this.payDate = payDate;
-    }
-
     public String getExpenceDescription() {
         return expenceDescription;
     }
@@ -91,27 +80,13 @@ public class Expences {
         this.expenceDescription = expenceDescription;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Expences expences = (Expences) o;
-        return Objects.equals(id, expences.id);
+    public String getPayDate() {
+        return payDate;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
+    public void setPayDate(String payDate) {
+        this.payDate = payDate;
     }
 
-    @Override
-    public String toString() {
-        return "Expences{" +
-                "id=" + id +
-                ", expenceAmmount=" + expenceAmmount +
-                ", payed=" + payed +
-                ", type='" + type + '\'' +
-                '}';
-    }
-
+    public LocalDate parsedPayDate (){return LocalDate.parse(payDate);}
 }
