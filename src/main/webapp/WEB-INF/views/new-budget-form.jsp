@@ -8,16 +8,17 @@
     <style><%@include file="css/css.css"%></style>
     <link rel="stylesheet" href="css/css.css">
 </head>
-<body style="text-align: center">
+<body>
 <jsp:include page="menu.jsp"/>
 <div>
-    <div class="text">
+    <div>
         <form:form modelAttribute="newBudget" method="post">
-            <p><strong>Podaj datę rozpoczęcia budżetu</strong><br/>
-                (optymalnym dniem jest ten, w którym na twoje konto wpływa wypłata)<br/>
+            <p class="list"><strong>Podaj datę rozpoczęcia budżetu</strong><br/>
+                (optymalnym dniem jest ten, w którym na twoje konto wpływa wypłata)
+                <br/>
                 <form:input type="date" path="stringDate" required="true"/>
             <form:errors cssClass="error" path="stringDate"/>
-            <p><input type="submit" value="Utwórz"></p>
+            <p><input type="submit" value="Utwórz" class="button-positive"></p>
         </form:form>
     </div>
 </div>

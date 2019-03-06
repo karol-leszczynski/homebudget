@@ -10,8 +10,6 @@ import pl.karoll.spring.homebudget.repositories.UserRepository;
 
 import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Service
@@ -22,12 +20,14 @@ public class InvitationService {
     private HttpSession session;
     private UserRepository userRepository;
     private BudgetRepository budgetRepository;
+    private TimeService timeService;
 
-    public InvitationService(InvitationRepository invitationRepository, HttpSession session, UserRepository userRepository, BudgetRepository budgetRepository) {
+    public InvitationService(InvitationRepository invitationRepository, HttpSession session, UserRepository userRepository, BudgetRepository budgetRepository, TimeService timeService) {
         this.invitationRepository = invitationRepository;
         this.session = session;
         this.userRepository = userRepository;
         this.budgetRepository = budgetRepository;
+        this.timeService = timeService;
     }
 
     public List<Invitation> invitationsList () {
@@ -45,16 +45,13 @@ public class InvitationService {
         budgetRepository.save(updatedBudget);
     }
 
-    public void saveInvitationWithReciverEmail (String reciverEmail){
-        DateTimeFormatter formatterLong = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        LocalDate budgetStartDate = (LocalDate) session.getAttribute("currentbudgetstartdate");
-        LocalDate budgetEndDate = (LocalDate) session.getAttribute("currentbudgetenddate");
-        String budgetStartDateText = budgetStartDate.format(formatterLong);
-        String budgetEndDateText = budgetEndDate.format(formatterLong);
+    public void saveInvitationWithReciverEmail (String reciverEmail
+            , String starDate
+            , String endDate){
         User sender = userRepository.getOne((Long) session.getAttribute("userid"));
         String senderName = sender.getUserName();
         String message = "Użytkownik "+senderName+" zaprosił Cię do budżetu od "
-                +budgetStartDateText+" do "+budgetEndDateText;
+                +starDate+" do "+endDate;
         Invitation invitation = new Invitation();
         invitation.setBudgetId((Long) session.getAttribute("currentbudgetid"));
         invitation.setSender(sender);

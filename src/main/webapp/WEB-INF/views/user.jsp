@@ -13,6 +13,21 @@
 <body>
 <jsp:include page="menu.jsp"/>
 
+<%--${all.id} current from dto--%>
+
+<%--<div>--%>
+    <%--<c:if test="${not empty sessionScope.currentBudgetDto}">--%>
+        <%--<c:forEach items="${sessionScope.currentBudgetDto.incomes}" var="income">--%>
+            <%--${income.incomeAmmount}--%>
+        <%--</c:forEach>--%>
+    <%--</c:if>--%>
+<%--</div>--%>
+<%--<div>--%>
+    <%--<c:forEach items="${all.incomes}" var="income">--%>
+        <%--${income.incomeAmmount}--%>
+    <%--</c:forEach>--%>
+<%--</div>--%>
+
 <div class="flex-container">
     <div class="columnleft">
         <div>
@@ -28,7 +43,7 @@
         <div>
             <c:forEach items="${list}" var="budget">
                 <div class="text">
-                    <a href="/budget/delete?budgetId=${budget.id}" class="button-negative">Usuń</a>
+                    <a href="/budget/warning?budgetId=${budget.id}" class="button-negative">Usuń</a>
                     <a href="/budget/set?id=${budget.id}" class="button-empty">
                         <strong>${budget.startDate.format(formatterShort)}</strong></a>
                     <hr class="thinLine">
@@ -40,11 +55,11 @@
         <c:if test="${not empty invitations}">
             <c:forEach items="${invitations}" var="invitation">
                 <p class="text">${invitation.message}
-                    <a class="button"
+                    <a class="button-positive"
                        href="/invitation/accept?userId=${invitation.reciver.id}
                        &budgetId=${invitation.budgetId}
                        &invitationId=${invitation.id}">Zaakceptuj</a>
-                    <a class="button" href="/invitation/delete?invitationId=${invitation.id}">Odrzuć</a>
+                    <a class="button-negative" href="/invitation/delete?invitationId=${invitation.id}">Odrzuć</a>
                 <hr class="thinLine">
                 </p>
             </c:forEach>
@@ -56,13 +71,16 @@
             <div class="text">
                 <h3>
                     <strong>BUDŻET</strong> OD <strong>
-                        ${sessionScope.currentbudgetstartdate.format(formatterLong)}</strong> DO
-                    <strong>${sessionScope.currentbudgetenddate.format(formatterLong)}</strong>
+                        ${currentBudgetDto.startDate.format(formatterLong)}</strong> DO
+                    <strong>${currentBudgetDto.endDate.format(formatterLong)}</strong>
                 </h3>
+
                 <form class="text" action="/invitation/send" method="post">
                     <c:if test="${not empty inviteMessage}">
                         <p class="error"><br/>${inviteMessage}</p>
                     </c:if>
+                    <input type="hidden" name="currentBudgetStartDate" value="${currentBudgetDto.startDate.format(formatterLong)}">
+                    <input type="hidden" name="currentBudgetEndDate" value="${currentBudgetDto.endDate.format(formatterLong)}">
                     <label>Zaproś inne osoby</label>
                     (podaj email) <input name="reciverEmail"/>
                     <input class="button-positive" type="submit" value="Zaproś">
@@ -104,7 +122,7 @@
                                 <td class="halfbread-left">Do dyspozycji tygodniowo: <strong>700 zł</strong></td>
                             </tr>
                             <tr>
-                                <td class="halfbread-left">Zaplanowane oszczędności: <strong>1500 zł</strong></td>
+                                <td class="halfbread-left">Zaplanowane oszczędności: <strong>${currentBudgetDto.savings} zł</strong></td>
                             </tr>
                             <tr>
                                 <td class="halfbread-left">Do końca weekendu możesz wydać: <strong>200 zł</strong></td>
@@ -178,7 +196,7 @@
                 </form>
 
                 <table>
-                    <c:forEach items="${incomes}" var="income">
+                    <c:forEach items="${currentBudgetDto.incomes}" var="income">
                         <tr class="incomes">
                             <td>
                                 <a href="/income/delete?incomeId=${income.id}" class="button-delete">-</a>
@@ -191,7 +209,10 @@
                 </table>
 
                 <p class="list"><strong>OSZCZĘDNOŚCI</strong><br></p>
-                <form class="list" action="" method="post">
+                <form class="list" action="/budget/set-savings" method="post">
+                    <c:if test="${not empty savingsMessage}">
+                        <p class="error"><br/>${savingsMessage}</p>
+                    </c:if>
                     <input style="width: 75%" name="savings" type="number" required="" value="" min="0">
                     <input class="button-add" type="submit" value="+">
                 </form>

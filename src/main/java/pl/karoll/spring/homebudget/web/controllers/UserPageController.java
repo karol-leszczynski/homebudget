@@ -10,7 +10,6 @@ import pl.karoll.spring.homebudget.service.*;
 
 import javax.servlet.http.HttpSession;
 import java.security.Principal;
-import java.time.format.DateTimeFormatter;
 
 @Controller
 @RequestMapping("/user")
@@ -19,37 +18,30 @@ public class UserPageController {
     private UserService userService;
     private BudgetService budgetService;
     private InvitationService invitationService;
-    private IncomeService incomeService;
     private TimeService timeService;
 
-
-    public UserPageController(UserService userService, BudgetService budgetService, InvitationService invitationService, InvitationRepository invitationRepository, InvitationService invitationService1, IncomeService incomeService, TimeService timeService) {
+    public UserPageController(UserService userService, BudgetService budgetService, InvitationService invitationService, TimeService timeService) {
         this.userService = userService;
         this.budgetService = budgetService;
-        this.invitationService = invitationService1;
-        this.incomeService = incomeService;
+        this.invitationService = invitationService;
         this.timeService = timeService;
     }
 
     @GetMapping
     public String userPage(Principal principal
-            , Model model
-            , HttpSession session){
+            , Model model, HttpSession session){
         String currentUsermail = principal.getName();
-        Long currentUserId = userService.currentUserIdByEmail(currentUsermail);
-        userService.setCurrentUserDataToSession(currentUsermail);
-        budgetService.setActualBudgdettoSession();
-        DateTimeFormatter formatterLong = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        DateTimeFormatter formatterShort = DateTimeFormatter.ofPattern("MM-yyyy");
-        model.addAttribute("formatterShort", formatterShort);
-        model.addAttribute("formatterLong", formatterLong);
+        userService.gatherCurrentUserDataByEmailAndSetUserDataToSession(currentUsermail);
         model.addAttribute("list", budgetService
-                .currentUserBudgets(currentUserId));
+                .currentUserBudgets((Long) session.getAttribute("userid")));
+        model.addAttribute("formatterShort", timeService.formatterShort);
+        model.addAttribute("formatterLong", timeService.formatterLong);
         model.addAttribute("invitationDto", new InvitationDto());
         model.addAttribute("invitations", invitationService.invitationsList());
-        model.addAttribute("incomes", incomeService.getIncomesForCurrentBudget());
         model.addAttribute("currentDate", timeService.currentDate());
         model.addAttribute("currentTime", timeService.currentDateTime());
+        model.addAttribute("currentBudgetDto", budgetService
+                .getCurrentBudgetDto((Long) session.getAttribute("currentbudgetid")));
         return "user";
     }
 }

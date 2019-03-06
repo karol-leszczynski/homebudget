@@ -43,19 +43,16 @@ public class UserService {
         return userRepository.findByEmail(email);
     }
 
-    public Long currentUserIdByEmail(String email) {
-        return currentUserByEmail(email).getId();
-    }
-
-    public String currentUserNameByEmail(String email) {
-        return currentUserByEmail(email).getUserName();
-    }
-
-    public void setCurrentUserDataToSession(String currentUserEmail) {
+    public void setCurrentUserDataToSession(User currentUser) {
         if (httpSession.getAttribute("userid") == null) {
-            httpSession.setAttribute("userid", currentUserIdByEmail(currentUserEmail));
-            httpSession.setAttribute("name", currentUserNameByEmail(currentUserEmail));
+            httpSession.setAttribute("userid", currentUser.getId());
+            httpSession.setAttribute("name", currentUser.getUserName());
         }
+    }
+
+    public void gatherCurrentUserDataByEmailAndSetUserDataToSession (String currentUserEmail){
+        User currentUser = currentUserByEmail(currentUserEmail);
+        setCurrentUserDataToSession(currentUser);
     }
 
     public void saveNewUser(UserDto userDto) {

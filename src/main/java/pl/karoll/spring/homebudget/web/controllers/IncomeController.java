@@ -22,12 +22,12 @@ public class IncomeController {
     private String addIncome (@RequestParam Double income
     , RedirectAttributes redirectAttributes){
         if(income<=0){
-            redirectAttributes.addFlashAttribute("incomeMessage"
+            redirectAttributes.addFlashAttribute("savingsMessage"
             ,"Wpływy muszą być większe od zera");
             return "redirect:/user";
         }
         if(income==null){
-            redirectAttributes.addFlashAttribute("incomeMessage"
+            redirectAttributes.addFlashAttribute("savingsMessage"
                     ,"Proszę podać wartość");
             return "redirect:/user";
         }

@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Period;
+import java.time.format.DateTimeFormatter;
 
 @Service
 public class TimeService {
@@ -31,6 +32,10 @@ public class TimeService {
     public LocalDateTime currentDateTime (){
         return LocalDateTime.now();
     }
+
+    public DateTimeFormatter formatterLong = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+
+    public DateTimeFormatter formatterShort = DateTimeFormatter.ofPattern("MM-yyyy");
 
 
 //    public static void main(String[] args) {

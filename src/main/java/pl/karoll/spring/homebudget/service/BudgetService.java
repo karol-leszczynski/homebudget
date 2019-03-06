@@ -1,6 +1,7 @@
 package pl.karoll.spring.homebudget.service;
 
 import org.springframework.stereotype.Service;
+import pl.karoll.spring.homebudget.dto.ExistingBudgetDto;
 import pl.karoll.spring.homebudget.dto.NewBudgetDto;
 import pl.karoll.spring.homebudget.model.Budget;
 import pl.karoll.spring.homebudget.model.Incomes;
@@ -33,18 +34,27 @@ public class BudgetService {
         this.incomeService = incomeService;
     }
 
-    public Long currentUserIdFromSeesion() {
-        return (Long) httpSession.getAttribute("userid");
+    public Budget budgetById(Long budgetId) {
+        return budgetRepository.getOne(budgetId);
     }
 
     public List<Budget> currentUserBudgets(Long currentUserId) {
-        return budgetRepository.findAllByUsersIdOrderByStartDateDesc(currentUserId);
+        List<Budget> list = budgetRepository.findAllByUsersIdOrderByStartDateDesc(currentUserId);
+        setActualBudgdetToSession(list);
+        return list;
     }
 
-    public void deleteBudget (Long budgetId){
+    public void setSavingsToCurrentBudget(Double savings) {
+        Budget updatedBudget = budgetRepository.getOne((Long) httpSession
+                .getAttribute("currentbudgetid"));
+        updatedBudget.setSavings(savings);
+        budgetRepository.save(updatedBudget);
+    }
+
+    public void deleteBudget(Long budgetId) {
 //        manual delete incomes
         List<Incomes> incomes = incomeService.getIncomesForBudgetById(budgetId);
-        for (Incomes income:incomes) {
+        for (Incomes income : incomes) {
             incomeService.deleteIncomeById(income.getId());
         }
         budgetRepository.deleteById(budgetId);
@@ -60,26 +70,39 @@ public class BudgetService {
         budgetRepository.save(budget);
     }
 
-    public void setActualBudgdettoSession() {
+    public void setActualBudgdetToSession(List<Budget> list) {
         if (httpSession.getAttribute("currentbudgetid") == null) {
-            List<Budget> list = currentUserBudgets(currentUserIdFromSeesion());
             LocalDate currentDate = LocalDate.now();
             for (Budget budget : list) {
                 if (currentDate.getMonth().equals(budget.getStartDate().getMonth())) {
                     httpSession.setAttribute("currentbudgetid",
                             budget.getId());
-                    setCurrentBuddgetDatesToSession(budget.getId());
                 }
             }
         }
     }
 
-    public void setCurrentBuddgetDatesToSession(Long id){
-        LocalDate startDate = budgetRepository.getOne(id).getStartDate();
-        LocalDate endDate = timeService.endOfMonthPeriodDate(startDate);
-        httpSession.setAttribute("currentbudgetstartdate",startDate);
-        httpSession.setAttribute("currentbudgetenddate",endDate);
+    public void setCurrentBudgetIdToSession(Long id) {
         httpSession.setAttribute("currentbudgetid", id);
+    }
+
+
+    public ExistingBudgetDto getCurrentBudgetDto(Long id) {
+        if (httpSession.getAttribute("currentbudgetid") != null) {
+            Budget currentBudget = budgetRepository.getOne(id);
+            ExistingBudgetDto currentBudgetDto = new ExistingBudgetDto();
+            currentBudgetDto.setId(currentBudget.getId());
+            currentBudgetDto.setSavings(currentBudget.getSavings());
+            currentBudgetDto.setStartDate(currentBudget.getStartDate());
+            currentBudgetDto.setEndDate(timeService
+                    .endOfMonthPeriodDate(currentBudget.getStartDate()));
+            currentBudgetDto.setDaysInMoth(currentBudget.getDaysInMonth());
+            currentBudgetDto.setUsers(currentBudget.getUsers());
+//        currentBudgetDto.setExpences();
+            currentBudgetDto.setIncomes(incomeService.getIncomesForBudgetById(id));
+            return currentBudgetDto;
+        }
+        return null;
     }
 
 }

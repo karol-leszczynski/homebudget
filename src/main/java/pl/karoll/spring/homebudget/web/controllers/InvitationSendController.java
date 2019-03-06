@@ -26,6 +26,8 @@ public class InvitationSendController {
 
     @PostMapping("/send")
     private String invitationSend(@RequestParam String reciverEmail
+            , String currentBudgetStartDate
+            , String currentBudgetEndDate
             , RedirectAttributes redirectAttributes) {
         if (!userService.ifExistByEmail(reciverEmail)) {
             redirectAttributes.addFlashAttribute(
@@ -33,7 +35,9 @@ public class InvitationSendController {
                     "Nie ma takiego użytkownika w systemie");
             return "redirect:/user";
         }
-        invitationService.saveInvitationWithReciverEmail(reciverEmail);
+        invitationService.saveInvitationWithReciverEmail(reciverEmail
+                , currentBudgetStartDate
+                , currentBudgetEndDate);
         redirectAttributes.addFlashAttribute(
                 "inviteMessage",
                 "Zaproszenie wysłane");
