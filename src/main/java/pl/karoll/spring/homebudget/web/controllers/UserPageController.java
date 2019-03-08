@@ -39,9 +39,10 @@ public class UserPageController {
         userService.gatherCurrentUserDataByEmailAndSetUserDataToSession(currentUsermail);
         model.addAttribute("list", budgetService
                 .currentUserBudgets((Long) session.getAttribute("userid")));
+        model.addAttribute("invitations", invitationService.invitationsList());
         model.addAttribute("formatterShort", timeService.formatterShort);
         model.addAttribute("formatterLong", timeService.formatterLong);
-        model.addAttribute("invitations", invitationService.invitationsList());
+        model.addAttribute("formatterShortDays", timeService.formatterShortDays);
         model.addAttribute("currentDate", timeService.currentDate());
         model.addAttribute("currentTime", timeService.currentDateTime());
         model.addAttribute("currentBudgetDto", budgetService

@@ -9,6 +9,7 @@ import pl.karoll.spring.homebudget.repositories.ExpenceRepository;
 
 import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Service
 @Transactional
@@ -22,6 +23,10 @@ public class ExpenceService {
         this.session = session;
         this.budgetRepository = budgetRepository;
         this.expenceRepository = expenceRepository;
+    }
+
+    public List<Expences> getExpencesForBudgetById (Long budgetId){
+        return expenceRepository.findByBudget_Id(budgetId);
     }
 
     public void addBudgetExpence (ExpeneceDto expeneceDto){
@@ -38,6 +43,10 @@ public class ExpenceService {
         }
         expenceRepository.save(expence);
 
+    }
+
+    public void deleteExpenceById(Long expenceId) {
+        expenceRepository.deleteById(expenceId);
     }
 
 }

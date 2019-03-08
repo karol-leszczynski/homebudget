@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import pl.karoll.spring.homebudget.dto.ExistingBudgetDto;
 import pl.karoll.spring.homebudget.dto.NewBudgetDto;
 import pl.karoll.spring.homebudget.model.Budget;
+import pl.karoll.spring.homebudget.model.Expences;
 import pl.karoll.spring.homebudget.model.Incomes;
 import pl.karoll.spring.homebudget.repositories.BudgetRepository;
 import pl.karoll.spring.homebudget.repositories.UserRepository;
@@ -22,16 +23,18 @@ public class BudgetService {
     private TimeService timeService;
     private HttpSession httpSession;
     private IncomeService incomeService;
+    private ExpenceService expenceService;
 
     public BudgetService(UserRepository userRepository
             , BudgetRepository budgetRepository
             , TimeService timeService, HttpSession httpSession
-            , IncomeService incomeService) {
+            , IncomeService incomeService, ExpenceService expenceService) {
         this.userRepository = userRepository;
         this.budgetRepository = budgetRepository;
         this.timeService = timeService;
         this.httpSession = httpSession;
         this.incomeService = incomeService;
+        this.expenceService = expenceService;
     }
 
     public Budget budgetById(Long budgetId) {
@@ -56,6 +59,11 @@ public class BudgetService {
         List<Incomes> incomes = incomeService.getIncomesForBudgetById(budgetId);
         for (Incomes income : incomes) {
             incomeService.deleteIncomeById(income.getId());
+        }
+//        manual delete expences
+        List<Expences> expences = expenceService.getExpencesForBudgetById(budgetId);
+        for (Expences expence : expences) {
+            expenceService.deleteExpenceById(expence.getId());
         }
         budgetRepository.deleteById(budgetId);
         httpSession.removeAttribute("currentbudgetid");
@@ -86,7 +94,6 @@ public class BudgetService {
         httpSession.setAttribute("currentbudgetid", id);
     }
 
-
     public ExistingBudgetDto getCurrentBudgetDto(Long id) {
         if (httpSession.getAttribute("currentbudgetid") != null) {
             Budget currentBudget = budgetRepository.getOne(id);
@@ -98,12 +105,12 @@ public class BudgetService {
                     .endOfMonthPeriodDate(currentBudget.getStartDate()));
             currentBudgetDto.setDaysInMoth(currentBudget.getDaysInMonth());
             currentBudgetDto.setUsers(currentBudget.getUsers());
-//        currentBudgetDto.setExpences();
             currentBudgetDto.setIncomes(incomeService.getIncomesForBudgetById(id));
+            currentBudgetDto.setExpences(expenceService.getExpencesForBudgetById(id));
             httpSession.setAttribute("currentBudgetStartDate"
-            , currentBudgetDto.getStartDate());
+                    , currentBudgetDto.getStartDate());
             httpSession.setAttribute("currentBudgetEndDate"
-            , currentBudgetDto.getEndDate());
+                    , currentBudgetDto.getEndDate());
             return currentBudgetDto;
         }
         return null;

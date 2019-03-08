@@ -30,6 +30,18 @@ public class ExpenceController {
         return "expence-form";
     }
 
+    @GetMapping("/unexpected")
+    public String prepareUnexpectedExpenceForm(Model model) {
+        model.addAttribute("unexpectedExpence", new ExpeneceDto());
+        return "unexpected-expence-form";
+    }
+
+    @GetMapping("/delete")
+    private String deleteExpence(@RequestParam Long expenceId) {
+        expenceService.deleteExpenceById(expenceId);
+        return "redirect:/user";
+    }
+
     @PostMapping("/new")
     public String saveNewExpence(
             @ModelAttribute("newExpence")
@@ -53,12 +65,40 @@ public class ExpenceController {
             return "redirect:/user";
         }
 
-        if (expeneceDto.getPayDate() != "") {
-            if (!timeService.isInCurrentBudgetPeriod(expeneceDto.parsedPayDate())){
+        if (!expeneceDto.getPayDate().equals("")) {
+            if (!timeService.isInCurrentBudgetPeriod(expeneceDto.parsedPayDate())) {
                 redirectAttributes.addFlashAttribute("expenceMessage"
                         , "Data wydatku musi zawierać sie pomiędzy datą początkowa i datą końcową budżetu");
                 return "redirect:/user";
             }
+        }
+
+        expenceService.addBudgetExpence(expeneceDto);
+
+        return "redirect:/user";
+    }
+
+    @PostMapping("/unexpected")
+    public String saveUnexpectedExpence(
+            @ModelAttribute("unexpectedExpence")
+            @Valid ExpeneceDto expeneceDto
+            , BindingResult result
+            , RedirectAttributes redirectAttributes
+            , HttpSession session) {
+        if (result.hasErrors()) {
+            redirectAttributes.addFlashAttribute("unexpectedExpenceMessage"
+                    , "Opis i Kwota nie mogą być puste");
+            return "redirect:/user";
+        }
+        if (expeneceDto.getExpenceDescription().length() > 50) {
+            redirectAttributes.addFlashAttribute("unexpectedExpenceMessage"
+                    , "Maksymalna długość opisu to 50 znaków");
+            return "redirect:/user";
+        }
+        if (expeneceDto.getExpenceAmmount() <= 0) {
+            redirectAttributes.addFlashAttribute("unexpectedExpenceMessage"
+                    , "Kwota musi być większa od zera");
+            return "redirect:/user";
         }
 
         expenceService.addBudgetExpence(expeneceDto);

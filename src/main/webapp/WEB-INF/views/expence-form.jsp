@@ -15,7 +15,7 @@
 <form:form modelAttribute="newExpence" action="/expence/new" method="post">
     <fieldset class="expences-form">
         <legend class="text-gray-small">PLANOWANE:</legend>
-        Opis <form:input path="expenceDescription" required="true" style="width: 33%"/>
+        Opis <form:input path="expenceDescription" required="true" style="width: 33%" type="text" maxlength="50"/>
         Kwota <form:input path="expenceAmmount" required="true" type="number" min="0.00" step="0.1" style="width: 12%"/>
         Data <form:input path="payDate" type="date" style="width: 8rem"/>
         <form:input path="type" type="hidden" value="o"/>

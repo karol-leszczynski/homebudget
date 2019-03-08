@@ -57,6 +57,8 @@ public class TimeService {
 
     public DateTimeFormatter formatterShort = DateTimeFormatter.ofPattern("MM-yyyy");
 
+    public DateTimeFormatter formatterShortDays = DateTimeFormatter.ofPattern("dd-MM");
+
 
 //    public static void main(String[] args) {
 //        LocalDate now = LocalDate.parse("2018-02-01");

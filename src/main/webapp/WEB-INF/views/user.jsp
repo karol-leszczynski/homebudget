@@ -6,28 +6,13 @@
 <head>
     <title>Strona użytkownika</title>
     <%--<style>--%>
-        <%--<%@include file="css/css.css" %>--%>
+    <%--<%@include file="css/css.css" %>--%>
     <%--</style>--%>
     <%--<link rel="stylesheet" href="css/css.css">--%>
     <link rel="stylesheet" href="/css/css.css">
 </head>
 <body>
 <jsp:include page="menu.jsp"/>
-
-<%--${all.id} current from dto--%>
-
-<%--<div>--%>
-    <%--<c:if test="${not empty sessionScope.currentBudgetDto}">--%>
-        <%--<c:forEach items="${sessionScope.currentBudgetDto.incomes}" var="income">--%>
-            <%--${income.incomeAmmount}--%>
-        <%--</c:forEach>--%>
-    <%--</c:if>--%>
-<%--</div>--%>
-<%--<div>--%>
-    <%--<c:forEach items="${all.incomes}" var="income">--%>
-        <%--${income.incomeAmmount}--%>
-    <%--</c:forEach>--%>
-<%--</div>--%>
 
 <div class="flex-container">
     <div class="columnleft">
@@ -80,8 +65,10 @@
                     <c:if test="${not empty inviteMessage}">
                         <p class="error"><br/>${inviteMessage}</p>
                     </c:if>
-                    <input type="hidden" name="currentBudgetStartDate" value="${currentBudgetDto.startDate.format(formatterLong)}">
-                    <input type="hidden" name="currentBudgetEndDate" value="${currentBudgetDto.endDate.format(formatterLong)}">
+                    <input type="hidden" name="currentBudgetStartDate"
+                           value="${currentBudgetDto.startDate.format(formatterLong)}">
+                    <input type="hidden" name="currentBudgetEndDate"
+                           value="${currentBudgetDto.endDate.format(formatterLong)}">
                     <label>Zaproś inne osoby</label>
                     (podaj email) <input name="reciverEmail"/>
                     <input class="button-positive" type="submit" value="Zaproś">
@@ -123,7 +110,8 @@
                                 <td class="halfbread-left">Do dyspozycji tygodniowo: <strong>700 zł</strong></td>
                             </tr>
                             <tr>
-                                <td class="halfbread-left">Zaplanowane oszczędności: <strong>${currentBudgetDto.savings} zł</strong></td>
+                                <td class="halfbread-left">Zaplanowane oszczędności: <strong>${currentBudgetDto.savings}
+                                    zł</strong></td>
                             </tr>
                             <tr>
                                 <td class="halfbread-left">Do końca weekendu możesz wydać: <strong>200 zł</strong></td>
@@ -209,6 +197,7 @@
                     </c:forEach>
                 </table>
 
+                <c:if test="${not empty currentBudgetDto.savings && not empty currentBudgetDto.expences}">
                 <p class="list"><strong>OSZCZĘDNOŚCI</strong><br></p>
                 <form class="list" action="/budget/set-savings" method="post">
                     <c:if test="${not empty savingsMessage}">
@@ -217,7 +206,7 @@
                     <input style="width: 75%" name="savings" type="number" required="" value="" min="0">
                     <input class="button-add" type="submit" value="+">
                 </form>
-
+                </c:if>
             </div>
 
             <div class="columnright">
@@ -227,14 +216,9 @@
                 <jsp:include page="/expence/new"/>
                 <strong class="error">${expenceMessage}</strong>
 
-                <form action="" method="post">
-                    <fieldset class="expences-form">
-                        <legend class="text-gray-small">NIEPRZEWIDZIANE:</legend>
-                        Opis <input style="width: 60%" name="ExpenceDescription" type="text" maxlength="50" required>
-                        Kwota <input style="width: 18%" name="ExpenceAmmount" type="number" required="" value="" min="0">
-                        <input class="button-add" type="submit" value="+">
-                    </fieldset>
-                </form>
+                <jsp:include page="/expence/unexpected"/>
+                <strong class="error">${unexpectedExpenceMessage}</strong>
+
                 <table class="expences-table">
                     <hr class="thinLine">
                     <tbody>
@@ -246,23 +230,22 @@
                         <th>Stały</th>
                         <th>Opłacony</th>
                     </tr>
-                    <tr>
-                        <td><a class="button-delete">-</a></td>
-                        <td class="expences-description">Paliwo sdfsdfsdfsdfsdfsdfsssdfsdfsd</td>
-                        <td>200 zł</td>
-                        <td>10-01</td>
-                        <td><form class="list"><input type="checkbox" class="checkbox"></form></td>
-                        <td><form class="list"><input type="checkbox" class="checkbox"></form></td>
-                    </tr>
-                    <tr>
-                        <td><a class="button-delete">-</a></td>
-                        <td class="expences-description">Kocie żarcie</td>
-                        <td>200 zł</td>
-                        <td>10-01</td>
-                        <td><form class="list"><input type="checkbox" class="checkbox"></form></td>
-                        <td><form class="list"><input type="checkbox" class="checkbox"></form></td>
-                    </tr>
-                    </tbody></table>
+                    <c:forEach items="${currentBudgetDto.expences}" var="expence">
+                        <tr>
+                            <td><a href="/expence/delete?expenceId=${expence.id}" class="button-delete">-</a></td>
+                            <td class="expences-description">${expence.expenceDescription}</td>
+                            <td>${expence.expenceAmmount} zł</td>
+                            <td>${expence.payDate.format(formatterShortDays)}</td>
+                            <td>
+                                <form class="list"><input type="checkbox" class="checkbox"></form>
+                            </td>
+                            <td>
+                                <form class="list"><input type="checkbox" class="checkbox"></form>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                    </tbody>
+                </table>
             </div>
 
         </c:if>
