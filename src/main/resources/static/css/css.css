@@ -365,15 +365,35 @@ h4 {
     margin: 0;
 }
 
-.days li {
+.day {
     display: inline-block;
-    width: 12%;
+    width: 11%;
     text-align: center;
-    margin-bottom: 0.35rem;;
-    font-size: 0.8rem;
+    margin-bottom: 0.3rem;
+    font-size:0.8rem;
     color: rgb(100, 100, 100);
     border-radius: 0.5rem;
     background-color: #edf2f5;
+}
+
+.day-normal {
+    border: 1px solid #edf2f5;
+    /*background-color: #edf2f5;*/
+}
+
+.day-planned {
+    border: 1px solid #116299;
+    /*background-color: #edf2f5;*/
+}
+
+.day-expired {
+    border: 1px solid #aa1919;
+    /*background-color: #edf2f5;*/
+}
+
+.day-empty {
+    border: 1px solid #00000000;
+    /*background-color: #00000000;*/
 }
 
 .calendar-container {
@@ -390,7 +410,7 @@ h4 {
     background-color: #edf2f5;
     padding-left: 0.6rem;
     padding-right: 0.6rem;
-    margin-bottom: 0.45rem;
+    margin-bottom: 0.55rem;
 }
 
 .boxes-right{

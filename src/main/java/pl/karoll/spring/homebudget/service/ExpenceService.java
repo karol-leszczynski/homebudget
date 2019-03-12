@@ -29,7 +29,7 @@ public class ExpenceService {
     }
 
     public List<Expences> getExpencesForBudgetById(Long budgetId) {
-        return expenceRepository.findByBudget_Id(budgetId);
+        return expenceRepository.findByBudget_IdOrderByPayDateDesc(budgetId);
     }
 
     public void switchTypeById(Long expenceId) {

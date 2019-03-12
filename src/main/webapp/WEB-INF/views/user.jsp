@@ -5,10 +5,6 @@
 <html>
 <head>
     <title>Strona użytkownika</title>
-    <%--<style>--%>
-    <%--<%@include file="css/css.css" %>--%>
-    <%--</style>--%>
-    <%--<link rel="stylesheet" href="css/css.css">--%>
     <link rel="stylesheet" href="/css/css.css">
 </head>
 <body>
@@ -21,7 +17,8 @@
         </div>
         <c:if test="${not empty sessionScope.currentbudgetid}">
             <div>
-                <a href="/budget/clone" class="button-menu">Duplikuj budżet</a>
+                <a href="" class="button-menu">Duplikuj budżet</a>
+                <%--<a href="/budget/clone" class="button-menu">Duplikuj budżet</a>--%>
             </div>
         </c:if>
         <hr class="line">
@@ -129,48 +126,53 @@
                             <li>Nd</li>
                         </ul>
                         <ul class="days">
-                            <li></li>
-                            <li>1</li>
-                            <li>2</li>
-                            <li>3</li>
-                            <li>4</li>
-                            <li>5</li>
-                            <li>6</li>
-                            <li>7</li>
-                            <li>8</li>
-                            <li>9</li>
-                            <li>10</li>
-                            <li>11</li>
-                            <li>12</li>
-                            <li>13</li>
-                            <li>14</li>
-                            <li>15</li>
-                            <li>16</li>
-                            <li>17</li>
-                            <li>18</li>
-                            <li>19</li>
-                            <li>20</li>
-                            <li>21</li>
-                            <li>22</li>
-                            <li>23</li>
-                            <li>24</li>
-                            <li>25</li>
-                            <li>26</li>
-                            <li>27</li>
-                            <li>28</li>
-                            <li>29</li>
-                            <li>30</li>
-                            <li>31</li>
+                            <c:forEach items="${calendar.days}" var="day">
+                                <c:choose>
+                                    <c:when test="${day.shortNumber==''}">
+                                        <c:set var="dayClass" value="day-empty"></c:set>
+                                    </c:when>
+                                    <c:when test="${day.type=='n'}">
+                                        <c:set var="dayClass" value="day-normal"></c:set>
+                                    </c:when>
+                                    <c:when test="${day.type=='p'}">
+                                        <c:set var="dayClass" value="day-planned"></c:set>
+                                    </c:when>
+                                    <c:when test="${day.type=='e'}">
+                                        <c:set var="dayClass" value="day-expired"></c:set>
+                                    </c:when>
+                                    <c:when test="${day.today}">
+                                        <c:set var="todayClass" value="day-today"></c:set>
+                                    </c:when>
+                                </c:choose>
+                                <c:choose>
+                                    <c:when test="${day.shortNumber==''}">
+                                        <c:set value="#00000000" var="dayBackground"></c:set>
+                                    </c:when>
+                                    <c:when test="${day.today}">
+                                        <c:set value="#c7deff" var="dayBackground"></c:set>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <c:set value="#edf2f5" var="dayBackground"></c:set>
+                                    </c:otherwise>
+                                </c:choose>
+
+                                <li class="day ${dayClass}" style="background-color:${dayBackground}">
+                                        ${day.shortNumber}
+                                </li>
+                            </c:forEach>
                         </ul>
                     </div>
                 </div>
 
-                <ul class="text-expired">
-                    Upłynął już termin na opłacenie:
-                    <li class="text-expired">&squf; Kocie żarcie</li>
-                    <li class="text-expired">&squf; Paliwo</li>
-                </ul>
-                <hr class="thinLine">
+                <c:if test="${not empty calendar.expiredExpences}">
+                    <ul class="text-expired">
+                        Upłynął już termin na opłacenie:
+                        <c:forEach items="${calendar.expiredExpences}" var="expence">
+                            <li class="text-expired">&squf; ${expence.expenceDescription}</li>
+                        </c:forEach>
+                    </ul>
+                    <hr class="thinLine">
+                </c:if>
 
             </div>
             <div class="columnleft">
@@ -244,7 +246,7 @@
                             </td>
                             <td>
                                 <input type="checkbox" class="checkbox"
-                                       <%--onchange="this.form.submit()"--%>
+                                    <%--onchange="this.form.submit()"--%>
                                        onchange="location='/expence/payed-switch?expenceId=${expence.id}'"
                                        <c:if test="${expence.payed}">checked="checked"</c:if>
                                 />

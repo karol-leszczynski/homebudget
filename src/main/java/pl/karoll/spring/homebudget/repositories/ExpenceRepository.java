@@ -8,6 +8,6 @@ import java.util.List;
 
 public interface ExpenceRepository extends JpaRepository <Expences, Long> {
 
-    List<Expences>findByBudget_Id(Long id);
+    List<Expences>findByBudget_IdOrderByPayDateDesc(Long id);
 
 }
