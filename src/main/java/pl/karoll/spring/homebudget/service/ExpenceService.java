@@ -9,7 +9,10 @@ import pl.karoll.spring.homebudget.repositories.ExpenceRepository;
 
 import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -25,11 +28,33 @@ public class ExpenceService {
         this.expenceRepository = expenceRepository;
     }
 
-    public List<Expences> getExpencesForBudgetById (Long budgetId){
+    public List<Expences> getExpencesForBudgetById(Long budgetId) {
         return expenceRepository.findByBudget_Id(budgetId);
     }
 
-    public void addBudgetExpence (ExpeneceDto expeneceDto){
+    public void switchTypeById(Long expenceId) {
+        Expences expence = expenceRepository.getOne(expenceId);
+        if (expence.getType().equals("a")) {
+            expence.setType("o");
+            expenceRepository.save(expence);
+        } else if (expence.getType().equals("o")) {
+            expence.setType("a");
+            expenceRepository.save(expence);
+        }
+    }
+
+    public void switchPayedById(Long expenceId) {
+        Expences expence = expenceRepository.getOne(expenceId);
+        if (expence.isPayed()) {
+            expence.setPayed(false);
+            expenceRepository.save(expence);
+        } else if (!expence.isPayed()) {
+            expence.setPayed(true);
+            expenceRepository.save(expence);
+        }
+    }
+
+    public void addBudgetExpence(ExpeneceDto expeneceDto) {
         Budget budget = budgetRepository
                 .getOne((Long) session.getAttribute("currentbudgetid"));
         Expences expence = new Expences();
@@ -38,7 +63,7 @@ public class ExpenceService {
         expence.setPayed(false);
         expence.setType(expeneceDto.getType());
         expence.setBudget(budget);
-        if(!expeneceDto.getPayDate().equals("")){
+        if (!expeneceDto.getPayDate().equals("")) {
             expence.setPayDate(expeneceDto.parsedPayDate());
         }
         expenceRepository.save(expence);
@@ -47,6 +72,20 @@ public class ExpenceService {
 
     public void deleteExpenceById(Long expenceId) {
         expenceRepository.deleteById(expenceId);
+    }
+
+    public List<Expences> expencesWithDate(List<Expences> expences) {
+        return expences.stream()
+                .filter(e -> e.getPayDate() != null)
+                .collect(Collectors.toList());
+    }
+
+    public List<Expences> expiredExpences(List<Expences> expences) {
+        List<Expences> dated = expencesWithDate(expences);
+        return dated.stream()
+                .filter(e -> e.getPayDate().isBefore(LocalDate.now()))
+                .filter(e -> !e.isPayed())
+                .collect(Collectors.toList());
     }
 
 }

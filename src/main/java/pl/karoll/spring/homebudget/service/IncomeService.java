@@ -9,6 +9,7 @@ import pl.karoll.spring.homebudget.repositories.BudgetRepository;
 import pl.karoll.spring.homebudget.repositories.IncomeRepository;
 import pl.karoll.spring.homebudget.repositories.UserRepository;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 import java.util.ArrayList;

@@ -2,18 +2,12 @@ package pl.karoll.spring.homebudget.web.controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import pl.karoll.spring.homebudget.dto.ExpeneceDto;
-import pl.karoll.spring.homebudget.dto.InvitationDto;
-import pl.karoll.spring.homebudget.repositories.InvitationRepository;
+import pl.karoll.spring.homebudget.dto.ExistingBudgetDto;
 import pl.karoll.spring.homebudget.service.*;
 
 import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
 import java.security.Principal;
 
 @Controller
@@ -24,12 +18,14 @@ public class UserPageController {
     private BudgetService budgetService;
     private InvitationService invitationService;
     private TimeService timeService;
+    private CalendarService calendarService;
 
-    public UserPageController(UserService userService, BudgetService budgetService, InvitationService invitationService, TimeService timeService) {
+    public UserPageController(UserService userService, BudgetService budgetService, InvitationService invitationService, TimeService timeService, CalendarService calendarService) {
         this.userService = userService;
         this.budgetService = budgetService;
         this.invitationService = invitationService;
         this.timeService = timeService;
+        this.calendarService = calendarService;
     }
 
     @GetMapping
@@ -45,8 +41,10 @@ public class UserPageController {
         model.addAttribute("formatterShortDays", timeService.formatterShortDays);
         model.addAttribute("currentDate", timeService.currentDate());
         model.addAttribute("currentTime", timeService.currentDateTime());
-        model.addAttribute("currentBudgetDto", budgetService
-                .getCurrentBudgetDto((Long) session.getAttribute("currentbudgetid")));
+        ExistingBudgetDto currentBudgetDto = budgetService.getCurrentBudgetDto();
+        model.addAttribute("currentBudgetDto", currentBudgetDto);
+        model.addAttribute("calendar"
+                , calendarService.getCalendarForBudget(currentBudgetDto));
         return "user";
     }
 

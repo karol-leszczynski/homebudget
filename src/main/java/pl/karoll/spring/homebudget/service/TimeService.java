@@ -8,6 +8,8 @@ import java.time.LocalDateTime;
 import java.time.Period;
 import java.time.chrono.ChronoLocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class TimeService {
@@ -22,6 +24,20 @@ public class TimeService {
     public int daysInMonth (LocalDate startDate){
         Period period = Period.between(startDate, endOfMonthPeriodDate(startDate));
         return period.getDays()+1;
+    }
+
+    public List<LocalDate> getDaysListBetweenDates (LocalDate startDate, LocalDate endDate){
+        List<LocalDate> days = new ArrayList<>();
+        int period = Period.between(startDate, endDate).getDays()+1;
+        for (int i=0; i<period; i++){
+            days.add(startDate.plusDays(i));
+        }
+        return days;
+    }
+
+    public int daysAfterSunday(LocalDate startDate){
+        int days = startDate.getDayOfWeek().getValue();
+        return days;
     }
 
     public LocalDate endOfMonthPeriodDate (LocalDate startDate){
@@ -58,6 +74,8 @@ public class TimeService {
     public DateTimeFormatter formatterShort = DateTimeFormatter.ofPattern("MM-yyyy");
 
     public DateTimeFormatter formatterShortDays = DateTimeFormatter.ofPattern("dd-MM");
+
+    public DateTimeFormatter formatterDaysOnly = DateTimeFormatter.ofPattern("dd");
 
 
 //    public static void main(String[] args) {

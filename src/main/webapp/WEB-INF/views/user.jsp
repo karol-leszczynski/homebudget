@@ -198,14 +198,14 @@
                 </table>
 
                 <c:if test="${not empty currentBudgetDto.savings && not empty currentBudgetDto.expences}">
-                <p class="list"><strong>OSZCZĘDNOŚCI</strong><br></p>
-                <form class="list" action="/budget/set-savings" method="post">
-                    <c:if test="${not empty savingsMessage}">
-                        <p class="error"><br/>${savingsMessage}</p>
-                    </c:if>
-                    <input style="width: 75%" name="savings" type="number" required="" value="" min="0">
-                    <input class="button-add" type="submit" value="+">
-                </form>
+                    <p class="list"><strong>OSZCZĘDNOŚCI</strong><br></p>
+                    <form class="list" action="/budget/set-savings" method="post">
+                        <c:if test="${not empty savingsMessage}">
+                            <p class="error"><br/>${savingsMessage}</p>
+                        </c:if>
+                        <input style="width: 75%" name="savings" type="number" required="" value="" min="0">
+                        <input class="button-add" type="submit" value="+">
+                    </form>
                 </c:if>
             </div>
 
@@ -237,10 +237,18 @@
                             <td>${expence.expenceAmmount} zł</td>
                             <td>${expence.payDate.format(formatterShortDays)}</td>
                             <td>
-                                <form class="list"><input type="checkbox" class="checkbox"></form>
+                                <input type="checkbox" class="checkbox"
+                                       onchange="location='/expence/type-switch?expenceId=${expence.id}'"
+                                       <c:if test="${expence.type == 'a'}">checked="checked"</c:if>
+                                />
                             </td>
                             <td>
-                                <form class="list"><input type="checkbox" class="checkbox"></form>
+                                <input type="checkbox" class="checkbox"
+                                       <%--onchange="this.form.submit()"--%>
+                                       onchange="location='/expence/payed-switch?expenceId=${expence.id}'"
+                                       <c:if test="${expence.payed}">checked="checked"</c:if>
+                                />
+
                             </td>
                         </tr>
                     </c:forEach>

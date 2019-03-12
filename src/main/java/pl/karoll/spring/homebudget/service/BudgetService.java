@@ -94,9 +94,10 @@ public class BudgetService {
         httpSession.setAttribute("currentbudgetid", id);
     }
 
-    public ExistingBudgetDto getCurrentBudgetDto(Long id) {
+    public ExistingBudgetDto getCurrentBudgetDto() {
         if (httpSession.getAttribute("currentbudgetid") != null) {
-            Budget currentBudget = budgetRepository.getOne(id);
+            Long currentBudgetId = (Long) httpSession.getAttribute("currentbudgetid");
+            Budget currentBudget = budgetRepository.getOne(currentBudgetId);
             ExistingBudgetDto currentBudgetDto = new ExistingBudgetDto();
             currentBudgetDto.setId(currentBudget.getId());
             currentBudgetDto.setSavings(currentBudget.getSavings());
@@ -105,8 +106,10 @@ public class BudgetService {
                     .endOfMonthPeriodDate(currentBudget.getStartDate()));
             currentBudgetDto.setDaysInMoth(currentBudget.getDaysInMonth());
             currentBudgetDto.setUsers(currentBudget.getUsers());
-            currentBudgetDto.setIncomes(incomeService.getIncomesForBudgetById(id));
-            currentBudgetDto.setExpences(expenceService.getExpencesForBudgetById(id));
+            currentBudgetDto.setIncomes(incomeService
+                    .getIncomesForBudgetById(currentBudgetId));
+            currentBudgetDto.setExpences(expenceService
+                    .getExpencesForBudgetById(currentBudgetId));
             httpSession.setAttribute("currentBudgetStartDate"
                     , currentBudgetDto.getStartDate());
             httpSession.setAttribute("currentBudgetEndDate"

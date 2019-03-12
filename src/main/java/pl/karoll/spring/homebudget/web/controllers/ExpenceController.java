@@ -42,6 +42,18 @@ public class ExpenceController {
         return "redirect:/user";
     }
 
+    @GetMapping("/type-switch")
+    private String typeSwitch(@RequestParam Long expenceId){
+        expenceService.switchTypeById(expenceId);
+        return "redirect:/user";
+    }
+
+    @GetMapping("/payed-switch")
+    private String payedSwitch(@RequestParam Long expenceId){
+        expenceService.switchPayedById(expenceId);
+        return "redirect:/user";
+    }
+
     @PostMapping("/new")
     public String saveNewExpence(
             @ModelAttribute("newExpence")
